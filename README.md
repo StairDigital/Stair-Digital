@@ -1,0 +1,174 @@
+# STAIR Digital — website
+
+The public site for STAIR Digital. Plain HTML, CSS and vanilla JavaScript: no
+build step, no framework, no `npm install`. Every animation runs in the
+visitor's browser, so the whole thing can be served by any static host.
+
+## Pages
+
+| File | Page |
+|---|---|
+| `index.html` | Home — drawn-staircase hero, client logos, the book, the founders, then a preview of each section |
+| `company.html` | About — parallax hero, split-card disciplines |
+| `capabilities.html` | Capabilities — the six service lines |
+| `enterprise-brain.html` | Enterprise Brain — unified memory and the enterprise SLM capability |
+| `industries.html` | Industries — six sectors |
+| `research.html` | Research — The AI Auditor, Bharat Protect, The ExO Playbook, and the Intelligence Briefings |
+| `engagements.html` | Engagements — client voices, attributed by sector |
+| `leadership.html` | Leadership — founder profiles |
+| `proposal.html` | Blueprint — visitor enters name and company, gets a downloadable PDF |
+| `contact.html` | Contact |
+
+`assets/` holds the CSS, the JavaScript effects, and the images.
+`worker/` holds the Cloudflare Worker that powers the Blueprint page.
+
+## Running it locally
+
+```
+python dev-server.py
+```
+
+Then open http://localhost:8760
+
+Use this rather than `python -m http.server`. The browser caches HTML documents,
+and the `?v=` stamps on the CSS and JS links cannot bust the document itself, so
+edits to any `.html` file appear not to take effect. `dev-server.py` sends
+no-cache headers on everything.
+
+## Deploying
+
+The site is served straight from `main` by GitHub Pages: **Settings → Pages →
+Deploy from a branch → main → / (root)**. There is nothing to build, so a push
+to `main` is a deploy.
+
+`.nojekyll` stops GitHub's blog engine from processing the folder.
+
+## The Blueprint page
+
+`proposal.html` works on its own: it builds a blueprint in the browser from a
+sector library. That is instant and free, but every company in a sector gets the
+same words.
+
+To make each blueprint genuinely researched, deploy the Cloudflare Worker in
+`worker/` and paste its URL into `API_ENDPOINT` at the top of
+`assets/proposal.js`. Full walkthrough in [`worker/DEPLOY.md`](worker/DEPLOY.md).
+
+**No API key belongs in this repository.** Anything in a web page is readable by
+anyone who opens developer tools. The Anthropic key lives only as a Cloudflare
+Worker secret. If the Worker is unreachable the page quietly falls back to the
+sector blueprint, so a visitor always gets a document.
+
+## Intelligence Briefings
+
+The articles on the Research page live in `ARTICLES` at the top of
+`assets/articles.js` — one object each, with the body as an array of blocks
+(`{p:…}` paragraph, `{h:…}` heading, `{q:…}` pull quote, `{ul:[…]}` list). Add an
+entry and it appears in the grid, in the filter chips, in the reader and in the
+PDF; nothing else needs touching.
+
+The PDF is `window.print()` against the print rules at the foot of
+`assets/articles.css`, the same approach the Blueprint page uses. No library, so
+nothing to keep patched and nothing that breaks the Content Security Policy. The
+letterhead is rebuilt in CSS rather than dropped in as the source PNG, because
+browsers strip background images from print by default; `.ap-head` and `.ap-foot`
+are `position:fixed`, which in paged media repeats them on every sheet.
+
+Every figure in the current six articles comes from STAIR's own April and July
+2026 briefings and names the house that published it. **Do not add a statistic
+without a source** — the whole argument of these pieces is that unsourced numbers
+should not be trusted.
+
+## Where blueprint enquiries go
+
+To **devraj@stair.digital**, as soon as one key is pasted in.
+
+`proposal.html` asks for a name, company, work email and phone, validates all
+four, and then emails the finished blueprint with those details attached. The
+send goes to Web3Forms, which turns a JSON POST into an email: no server of
+ours, no library on the page, one host added to the CSP.
+
+**To switch it on:**
+
+1. Go to web3forms.com and enter `devraj@stair.digital`. They email back an
+   access key (a UUID).
+2. Paste it into `LEAD_ACCESS_KEY` at the top of `assets/proposal.js`.
+
+That is the whole setup. `connect-src` in `proposal.html` already allows
+`https://api.web3forms.com`.
+
+The key is public by design: it only permits sending **to** the address it was
+created for, so it cannot be used to mail anyone else, and the destination is
+set by whoever created the key rather than by this file. That is why it is safe
+in a public repo, unlike an API key.
+
+While `LEAD_ACCESS_KEY` is blank **nothing is sent** and nothing is recorded.
+The visitor still gets their blueprint, and still gets the "Send this to STAIR"
+button, which opens a prefilled mail carrying their own details.
+
+The email arrives with the enquirer as Reply-To, so hitting reply answers them
+directly, and carries the full blueprint text: executive summary, why now, focus
+areas, approach, governance and expected impact.
+
+## Security
+
+See [`SECURITY.md`](SECURITY.md) for what is already in place (Subresource
+Integrity on every CDN script, a Content Security Policy, no secrets in the
+tree), the GitHub settings you have to change yourself, and an honest note on
+why "stop people copying the frontend" is not a thing any site can do.
+
+**If you upgrade GSAP or Lenis, regenerate the SRI hash** or the browser will
+refuse to load it. The command is in SECURITY.md.
+
+## Things that will catch you out
+
+**Case sensitivity.** Windows does not care about case in filenames; GitHub Pages
+runs on Linux and does. `assets/Img/logo.png` will work on your laptop and 404 in
+production. Match the case exactly.
+
+**Cache stamps.** CSS and JS are linked with `?v=NN`. Bump that number across all
+HTML files whenever you change a file in `assets/`, or returning visitors keep the
+old version. It cannot bust the HTML documents themselves — only the assets.
+
+**One shared animation loop.** Effects register through `FX.add` in
+`assets/fx-core.js` rather than starting their own `requestAnimationFrame` loop,
+and visibility comes from `FX.watch`. This exists because per-effect loops calling
+`getBoundingClientRect` were forcing hundreds of layout flushes a second and
+making the site feel slow. New effects should use the same seams.
+
+**Performance probe.** Append `?perf=1` to any page, scroll it slowly, then press
+`P` for a report of what each effect is costing.
+
+**Relative URLs inside CSS custom properties.** A `url()` written into a custom
+property in an HTML `style` attribute resolves against the *stylesheet that
+consumes it*, not the page. `--img:url(assets/img/x.jpg)` used by a rule in
+`assets/research.css` therefore requests `assets/assets/img/x.jpg` and 404s. Write
+it as `url(img/x.jpg)`, relative to `assets/`. This silently broke five images on
+the Research page for a while, because a missing background just looks like a
+design choice.
+
+**An inline SVG with no styles becomes a black blob.** Icons here are written
+bare (`<svg viewBox="0 0 24 24"><path .../></svg>`) and get `fill:none;
+stroke:currentColor` plus a size from CSS. Delete or rename that rule and the
+SVG falls back to its own defaults: stretched to fill its container, with the
+path filled solid black. A chevron rendered that way looks exactly like a giant
+play button, which is how it was found. There is no global guard, because some
+icons (the LinkedIn mark) genuinely rely on the default fill, so check the CSS
+for an icon before deleting it.
+
+**Prefer gradients to `filter: blur()` for glows.** `filter:blur(51px)` over a
+1500x1000 element is one of the most expensive things a browser can paint, and
+animating `filter` re-rasterises the whole subtree every frame. A
+`radial-gradient` with soft stops is the same picture, painted once. Animate
+only `transform` and `opacity`.
+
+**WebGL contexts add up.** Each `data-` effect is its own context. The Research
+page ran three.js with an EffectComposer post-processing chain for a hero
+background, plus three more fields; it now runs none, and the same looks come
+from drifting gradients. Reach for GL when the effect genuinely needs per-pixel
+work, not for a slow wash of colour.
+
+**Pinned sections cost scroll distance.** A `height:200vh` section with a pinned
+child means two full screens of scrolling where the page does not advance. That
+is what "sticky" means to a visitor. Keep the total across a page modest, and
+prefer entrance animations over scrubbed ones for anything that is not the main
+event.

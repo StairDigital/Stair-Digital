@@ -63,20 +63,30 @@ sector blueprint, so a visitor always gets a document.
 The articles on the Research page live in `ARTICLES` at the top of
 `assets/articles.js` — one object each, with the body as an array of blocks
 (`{p:…}` paragraph, `{h:…}` heading, `{q:…}` pull quote, `{ul:[…]}` list). Add an
-entry and it appears in the grid, in the filter chips, in the reader and in the
-PDF; nothing else needs touching.
+entry and it appears in the grid, in the reader and in the PDF; nothing else
+needs touching.
+
+An entry may also carry `by` and `label`. Those two turn a house briefing into a
+signed piece: the reader and the PDF then lead with "By &lt;name&gt;" and with
+`label` ("Op-Ed") in place of the default "AI Intelligence Briefing" line.
 
 The PDF is `window.print()` against the print rules at the foot of
 `assets/articles.css`, the same approach the Blueprint page uses. No library, so
 nothing to keep patched and nothing that breaks the Content Security Policy. The
 letterhead is rebuilt in CSS rather than dropped in as the source PNG, because
-browsers strip background images from print by default; `.ap-head` and `.ap-foot`
-are `position:fixed`, which in paged media repeats them on every sheet.
+browsers strip background images from print by default. `.ap-head` and `.ap-foot`
+sit in normal flow, **not** `position:fixed` — fixed positioning in paged media
+made Chrome lay the letterhead over the first paragraph instead of above it.
 
-Every figure in the current six articles comes from STAIR's own April and July
-2026 briefings and names the house that published it. **Do not add a statistic
-without a source** — the whole argument of these pieces is that unsourced numbers
-should not be trusted.
+There are twelve pieces. The ten briefings draw every figure from STAIR's own
+April and July 2026 work and name the house that published it: **do not add a
+statistic without a source**, since the whole argument of those pieces is that
+unsourced numbers should not be trusted. The two signed op-eds are reproduced
+from the author's manuscript word for word — the deck, the section headings and
+the pull quotes are the only editorial additions, and each pull quote is a
+sentence lifted whole off the end of the paragraph it used to close, so no
+sentence is duplicated and none is lost. If one is ever re-edited, diff the
+rendered text against the manuscript rather than trusting a read-through.
 
 ## Where blueprint enquiries go
 
@@ -172,3 +182,29 @@ child means two full screens of scrolling where the page does not advance. That
 is what "sticky" means to a visitor. Keep the total across a page modest, and
 prefer entrance animations over scrubbed ones for anything that is not the main
 event.
+
+**Size photographs to the box that paints them, not to the screen.** The images
+here are mostly CSS backgrounds drawn `cover` into small slots, and a slot does
+not care how large the source is. The About page once shipped seven megabytes
+because ten 2560px frames were being painted into a 250x560 column; one of them
+was 2560x3584 for a slot that shows 500x1120 on a retina screen, about thirty
+times the pixels needed. Measure the rendered box, double it for retina, and
+work the crop out from the `cover` maths — for a tall narrow slot it is the
+*height* that binds, not the width. Those ten are also drawn at `opacity:.17`
+under a scrim, so they are a texture rather than a photograph and compress much
+harder than a picture anyone actually looks at. Judge the result on the
+composited appearance, not on the file.
+
+**Decorative things below the fold should not load with the page.** The ring on
+Industries is thirty frames and sits more than five screens down, so building it
+at load meant two megabytes competing with the content at the top for every
+visitor, including everyone who never scrolled that far. `round-carousel.js`
+now builds on approach, one and a half screens ahead, which is far enough that
+the frames are cached before anyone arrives.
+
+**An IntersectionObserver that never fires is not always your bug.** A browser
+context that is not running the rendering lifecycle — a hidden pane, a
+background tab — does not deliver observer callbacks at all, not even the
+initial one. Effects that gate on an observer therefore want the same kind of
+failsafe the book and the carousel carry, and anything observer-driven has to be
+checked in a browser that genuinely renders.

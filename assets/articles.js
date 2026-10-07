@@ -1,11 +1,13 @@
 /* ============================================================
    Intelligence Briefings — the articles section on Research.
 
-   Content is drawn from STAIR's own monthly AI Intelligence Briefings
-   (April and July 2026). Every figure and attribution below appears in
-   those briefings; nothing here is invented. Where a number is quoted
-   the house that published it is named, because a statistic without a
-   source is the thing this firm tells clients not to accept.
+   Two kinds of piece live here. The signed op-eds carry a `by` and a
+   `label`, and are reproduced from the author's manuscript verbatim. The
+   rest are drawn from STAIR's own monthly AI Intelligence Briefings
+   (April and July 2026): every figure and attribution in them appears in
+   those briefings, nothing is invented, and where a number is quoted the
+   house that published it is named, because a statistic without a source
+   is the thing this firm tells clients not to accept.
 
    Rendering is plain DOM building. The reader is one overlay reused for
    whichever article is open, and the PDF is window.print() against the
@@ -17,6 +19,94 @@
   "use strict";
 
   var ARTICLES = [
+    /* The two op-eds below are Shailesh Haribhakti's own, reproduced from the
+       manuscripts word for word. Every paragraph is his and in his order. The
+       only editorial additions are the deck, the section headings and the two
+       pull quotes — and each pull quote is a sentence lifted whole off the end
+       of the paragraph it used to close, so nothing is duplicated and nothing
+       is lost. They carry a byline and an "Op-Ed" label rather than the
+       briefing label, because they are signed argument, not our reading notes. */
+    {
+      id: 'taroi',
+      cat: 'Opinion',
+      date: '2026-09-28',
+      dateLabel: 'September 2026',
+      read: 7,
+      accent: '#8E3B52',
+      by: 'Shailesh Haribhakti',
+      label: 'Op-Ed',
+      glyph: '<path d="M4 17a8 8 0 1 1 16 0"/><path d="M12 17 16.2 10.6"/><path d="M4.6 13.4 6.4 14M12 9.2V8M19.4 13.4 17.6 14"/><circle cx="12" cy="17" r="1.4"/>',
+      title: 'The Intelligence Revolution Needs a Measure of Trust',
+      deck: 'A proposal: count the value an AI system releases only in proportion to the evidence a board can actually inspect, and set it against the full cost of making the result safe.',
+      body: [
+        {p: 'The next race in artificial intelligence will not be won by the system that speaks most fluently or consumes the most electricity. It will be won by intelligence that can earn trust while improving lives. That is why every serious AI deployment should answer a practical question: what value has it released, what evidence supports the claim, and what has it cost to make the result safe?'},
+        {h: 'A measure for the question'},
+        {p: 'I have proposed a measure for that question: TAROI, or Trust-Adjusted Return on Intelligence. Its equation is simple: (value released × evidence coverage) ÷ (compute + governance + remediation). The measure asks boards and governments to count value only in proportion to the evidence that can be inspected, and to set that against the full cost of the intelligence, its safeguards and its repair. A system that produces impressive outputs but cannot show how it reached consequential decisions has weak evidence coverage. A system that causes harm, or cannot be corrected, has not created durable value.'},
+        {p: 'TAROI should not become a single score that excuses a rights violation. Its units and time horizon must be stated, evidence coverage must be auditable, and safety limits must stand as gates. No favorable return can compensate for an unacceptable risk to life, liberty, dignity or the planet. The number is useful because it forces a common conversation about value and trust, not because every human good can be reduced to dollars.'},
+        {p: 'This is a civilizational question as much as a technical one. The Vedas and Upanishads are not engineering manuals for machine learning. They offer a deeper reminder: knowledge carries responsibility. Ideas such as dharma, truthfulness and the interdependence expressed in “Tat Tvam Asi” invite us to ask whose welfare intelligence serves and what obligations accompany power. A plural society must answer those questions through constitutional rights, public reasoning and lived accountability, not by pretending one tradition can dictate a global code.'},
+        {h: 'Five worlds, one ethic'},
+        {p: 'The question becomes urgent as AI enters five very different worlds. They need a shared ethic, but not identical controls.'},
+        {p: 'First are population-scale systems: climate models, disease elimination, personalised education, preventive care and public services. Their purpose must be set in public, with explicit rights, consent where possible, and a human route to challenge decisions. Accuracy must be tested across regions and groups, with independent validation against real outcomes and continuous checks for drift. Cyber protection should limit data to what the purpose requires, separate identity from sensitive records, secure exchanges across institutions, and preserve an immediate route to pause a failing service. For a system that shapes millions of lives, the public must be able to see what it is meant to do, what it cannot do and who will answer for failure.'},
+        {p: 'Second is AI for specialised research: the ambition, voiced by people such as Peter Diamandis and A.W. Gross, to use advanced intelligence to accelerate solutions to hard problems. The mission should be specific and socially beneficial, with expert review and controls for dual-use work that could enable biological, chemical, cyber or other forms of harm. Accuracy requires reproducible methods, traceable sources, preserved experimental records and clear separation between a model’s hypothesis and verified evidence. Research environments should be isolated from production networks, access to powerful models and sensitive data should be tightly governed, and red teams should test for misuse before release. A discovery is not a success if its benefits cannot be shared safely or its methods cannot be checked.'},
+        {p: 'Third is AI in physical systems: cars, robots, industrial equipment, aircraft, drones, ships and other machines that can act on the world. These systems need a bounded operating domain, defined authority and a safe state they can reach when uncertain. Before deployment, they should pass independent simulation and hardware testing across ordinary conditions, edge cases and failures in sensors, networks and power. Their cyber protections should include signed software and model updates, isolated control networks, verified components and secure maintenance channels. Local emergency stops, manual takeover and tested fail-safe behaviour are essential.'},
+        {q: 'When a machine can injure someone, a confident answer from the model is never a substitute for demonstrated safety.'},
+        {p: 'Fourth is enterprise AI. A company should name the person accountable for every consequential use and specify which decisions an agent may recommend, prepare or execute. Evaluation must use representative cases, include the errors the system fails to flag, and check the operational outcome rather than just the quality of a demonstration. Cyber controls should give each agent only the permissions it needs, authenticate every action, separate duties, log decisions in tamper-evident form and test vendor connections. Boards should see the value released, the evidence behind it, unresolved exceptions and the cost of correction. TAROI can move AI from an innovation story into a disciplined investment conversation.'},
+        {p: 'Fifth is AI used by individuals to learn, search, understand and act. These tools should disclose when a person is interacting with AI, protect private information by default and give users control over what the system can access or do. They should show sources for factual claims, signal uncertainty, correct mistakes and decline to impersonate professional or spiritual authority. Cyber safeguards must defend against prompt injection, impersonation and unsafe tool use, while making permissions visible and reversible. People should be able to appeal consequential decisions and reach a human when the stakes demand it. At this scale, trust is earned in ordinary moments: an answer that admits what it does not know, a source that can be checked, a permission that can be withdrawn.'},
+        {h: 'A global compact'},
+        {p: 'These five domains suggest a global compact: common rules for evidence and accountability, with controls proportionate to risk. Existing foundations are useful. NIST’s AI Risk Management Framework gives organisations a voluntary process for managing AI risk, while the European Union’s AI Act uses a risk-based structure and adds obligations for general-purpose models. UNESCO’s Recommendation on the Ethics of AI offers a global ethical baseline.'},
+        {q: 'The gap is not a shortage of principles. It is the uneven conversion of principles into observable proof across borders and sectors.'},
+        {p: 'Regulation should therefore be light in form and bright in evidence. Every high-impact system should carry a public-facing purpose statement, a named accountable owner, a tested risk file, documented data and model lineage, independent evaluations, a security plan and a record of material incidents. Regulators should require stronger tests where failure could cause mass harm, and allow simpler assurance for low-risk uses. Shared testing protocols, mutual recognition of credible audits and time-bound regulatory sandboxes can help responsible developers move quickly without forcing every country to reinvent the same rules.'},
+        {h: 'Recursive self-improvement'},
+        {p: 'Recursive self-improvement makes this compact more urgent. An AI system may help design a more capable successor; it must not quietly rewrite its own purpose, permissions or safety limits. Each material change should be proposed, tested in an isolated environment, challenged by an independent evaluator, approved by a responsible human, released gradually and checked again in production. The objectives, risk boundaries, logs, approval rules and shutdown path should remain outside the system’s power to change. When evidence fails, the system must be capable of being stopped and restored to a known-safe state.'},
+        {h: 'Governance as accelerant'},
+        {p: 'That is how governance can accelerate a race to excellence. A trusted system earns broader adoption; broader adoption produces better evidence; better evidence supports faster, safer improvement. The prize is not intelligence for its own sake. It is intelligence that helps eliminate disease, strengthen learning, restore ecosystems, make enterprises more productive and give individuals greater agency without concentrating power beyond accountability.'},
+        {p: 'The old contest asked who could build the most capable machine. The more consequential contest asks who can make intelligence dependable at the scale of human need. TAROI gives us a way to keep asking whether value is real, whether proof is sufficient and whether the cost of trust has been paid. If we measure all three, superintelligence can become a source of shared abundance. If we measure capability alone, we may discover too late that power has outrun wisdom.'}
+      ]
+    },
+
+    {
+      id: 'taroi-futures',
+      cat: 'Opinion',
+      date: '2026-09-29',
+      dateLabel: 'September 2026',
+      read: 7,
+      accent: '#3F5FA8',
+      by: 'Shailesh Haribhakti',
+      label: 'Op-Ed',
+      /* One trunk forking into two futures: the piece's argument that value
+         includes the options a system creates. Three branches and a baseline
+         were tried first and turned to mush at the 29px the mark renders at. */
+      glyph: '<path d="M3.5 20.5h17"/><path d="M12 20.5v-6.7"/><path d="M12 13.8 6.3 8.1M12 13.8l5.7-5.7"/><circle cx="5.1" cy="6.9" r="1.7"/><circle cx="18.9" cy="6.9" r="1.7"/>',
+      title: 'AI’s Future Cannot Be Measured by Today’s Returns',
+      deck: 'A second look at the same measure, widened. Value includes the options an AI system creates, evidence coverage cannot rest on a human catching every action, and no projected return cancels a risk to life or liberty.',
+      body: [
+        {p: 'Artificial intelligence is an investment in futures we cannot fully see. Its greatest value may arrive years after deployment, through capabilities it makes possible, discoveries it accelerates and public needs it helps meet. Yet the speed and autonomy of these systems are also creating consequences their builders cannot reliably predict. A measure of return is necessary. It cannot be the whole test of trust.'},
+        {p: 'I proposed TAROI: Trust-Adjusted Return on Intelligence, expressed as (value released × evidence coverage) ÷ (compute + governance + remediation). The idea is to connect the value an AI system creates to the evidence that supports it and the full cost of operating it responsibly. That remains a useful discipline for boards and governments. But AI asks us to widen the numerator and resist turning the formula into a verdict.'},
+        {h: 'Widening the numerator'},
+        {p: 'Value should include what has been realised and what the system credibly enables. An AI research platform may not yet have produced a medicine; it may still create option value by shortening experiments or opening a promising line of inquiry. A learning system may build a capability whose economic return appears years later. These prospects should be described as ranges, with assumptions and confidence levels, rather than booked as certain gains. We should track both near-term results and the future options created, then revise the estimate as evidence changes.'},
+        {h: 'Evidence coverage at machine speed'},
+        {p: 'The second term, evidence coverage, also needs more than a count of decisions inspected. Agentic systems can chain tools, delegate tasks and act at machine speed. Reviewing a sample after the event or placing a person in every loop will not be enough. People must remain accountable, but safety cannot depend on a human catching each novel action in time.'},
+        {q: 'The architecture must constrain what the system can do, limit the damage it can cause and make recovery possible when it behaves in an unexpected way.'},
+        {h: 'Four views, not one score'},
+        {p: 'TAROI, then, is one economic lens in a multidimensional assessment. Beside it, leaders should see at least four independent views: future value and uncertainty; the system’s autonomy and reach; reliability, cyber resilience and recoverability; and effects on rights, distribution and the natural world. These views should not be collapsed into a single weighted score. A large projected return cannot cancel an unacceptable risk to life or liberty. Each dimension needs its own evidence, thresholds and accountable owner.'},
+        {p: 'This is a civilizational question as much as a technical one. The Vedas and Upanishads are not manuals for machine learning. They remind us that knowledge carries responsibility and that the self is bound to a larger whole. Dharma asks what action is right in context; truthfulness demands that we distinguish what we know from what we merely predict. Such ideas can deepen a global conversation, while the rules themselves must protect pluralism, constitutional rights and the freedom of people who do not share one tradition.'},
+        {h: 'Five worlds, different forms'},
+        {p: 'The same principles must take different forms in the five worlds where AI is already moving.'},
+        {p: 'At population scale, AI may help anticipate disease, personalise education, improve preventive care and coordinate climate action. The objective and rights must be set publicly, with community participation and a clear route to contest harmful outcomes. Accuracy should be assessed across regions and groups and measured through real-world outcomes, not only benchmark tests. Because nobody can review every decision, independent teams should test the system’s boundaries, monitor population-level effects and trigger pause or rollback when those effects cross agreed limits. Data should be minimised, identity protected and exchanges secured. A public system must be answerable even when its decisions emerge from a complex chain of models and agents.'},
+        {p: 'In specialised research, including the ambitious problem-solving vision associated with Peter Diamandis and A.W. Gross, AI can search enormous spaces of hypotheses and accelerate discovery. The mission should be bounded, with independent expertise and restrictions where a method could be repurposed for biological, chemical, cyber or other harm. Accuracy requires reproducible experiments, traceable evidence and a visible distinction between a generated hypothesis and a result that has survived verification. Research agents should work in isolated environments, with controlled access to instruments, data and external networks. Each stage that increases a system’s ability to produce or execute hazardous work should require stronger evaluation and authorization.'},
+        {p: 'In cars, robots, aircraft, drones, ships and industrial equipment, an error leaves the screen and enters the physical world. Safety must be designed into the machine through tested operating boundaries, independent safety controllers and predictable safe states. Simulations should include sensor failure, hostile inputs, network loss and conditions outside the ordinary operating range; physical tests must then challenge the model’s assumptions. Secure boot, signed updates, segmented control networks and verified components protect the system from tampering. Geofences, speed and force limits, emergency stops and recovery procedures should hold even when the AI’s own reasoning is unfamiliar.'},
+        {q: 'Human override matters, but it cannot be the only barrier between an unpredictable decision and an injury.'},
+        {p: 'Inside enterprises, each agent should receive a defined task, limited permissions and a budget for actions, time and transactions. A named executive remains accountable for the use. Independent evaluation should test not just answer quality but the full workflow, including tool calls, delegation, errors and attempts to escape the assigned scope. Two-person approval can govern high-consequence actions; lower-risk work can proceed within preauthorised limits. Tamper-evident logs, separation of duties, vendor controls and tested rollback paths make the chain reconstructable and correctable. Boards should see TAROI beside future-value ranges, exceptions, autonomy exposure and recovery readiness.'},
+        {p: 'For individuals using AI to learn, search, understand and act, the product should make uncertainty visible and offer sources that users can check. It should protect personal information by default and request specific permission before taking consequential action. Tool access should be narrow and revocable; prompt injection, impersonation and manipulative design should be tested continuously. A human contact or appeal route remains necessary for important decisions, but a safe default is equally important: if the user has not authorised an action, the assistant should not take it. Trust grows when the interface makes its limits plain and gives people control that actually works.'},
+        {h: 'Making assurance portable'},
+        {p: 'A global regulatory compact can support excellence without prescribing one technology or freezing innovation. Existing foundations, including NIST’s voluntary AI Risk Management Framework, the European Union’s risk-based AI Act and UNESCO’s Recommendation on the Ethics of AI, provide useful starting points. The next step is to make assurance portable: common definitions for high-impact uses, shared testing protocols, reliable incident reporting and mutual recognition of credible independent evaluations. Low-risk uses should face light requirements. Systems with broad reach, powerful tool access or irreversible effects should meet higher standards before and after deployment.'},
+        {p: 'Regulators should focus on what a system can do in its deployment context, not only on the name or size of its model. Developers and deployers should publish a purpose statement, identify an accountable owner, document data and model lineage, test foreseeable and adversarial conditions, and report serious incidents. For systems whose behaviour cannot be fully predicted, assurance must be continuous and adaptive. New capabilities, new connections or a change in environment should trigger fresh assessment. A regulatory sandbox can speed learning, provided participation does not waive rights or accountability.'},
+        {h: 'Recursive self-improvement'},
+        {p: 'Recursive self-improvement makes those rules urgent. A system may help design its successor or propose a better way to pursue an approved task. It must not control the mechanisms that define its own authority. Mission, permissions, safety limits, resource ceilings and shutdown mechanisms should be protected outside the model. Changes should be tested in isolation, challenged by independent evaluators and released gradually, with automated monitors enforcing limits at runtime. If behaviour departs from the authorised envelope, the system should lose access to the relevant tools, isolate safely and preserve evidence for review. Human approval remains part of the chain; external technical constraints make that approval meaningful.'},
+        {p: 'We cannot write a complete map of the future because AI will help create the terrain. We can, however, build institutions that learn without surrendering their standards. Set a public purpose. Measure realised value and future options honestly. Keep economic return distinct from rights, safety and resilience. Constrain autonomy before release, detect changes as they emerge and make recovery a tested capability. TAROI begins the conversation by asking what intelligence returns for the resources and trust invested in it. A fuller scorecard asks whether that return can endure uncertainty and remain worthy of the people who live with its consequences.'}
+      ]
+    },
+
     {
       id: "cs-oem",
       cat: "Case study",
@@ -467,13 +557,19 @@
     if (!reader || !readerBody) return;
     lastFocus = document.activeElement;
     readerBody.style.setProperty('--c', a.accent);
+
+    /* A signed piece leads with its author; our own reading notes lead with
+       the house. Everything without a `by` keeps the old briefing line. */
+    var label = a.label || 'AI Intelligence Briefing';
+    var credit = (a.by ? 'By ' + a.by + ' &middot; ' : '') + 'STAIR Digital &middot; ' + label;
+
     readerBody.innerHTML =
       '<header class="ar-head">' +
         '<span class="ar-mark" aria-hidden="true"><svg viewBox="0 0 24 24">' + a.glyph + '</svg></span>' +
         '<p class="ar-meta"><em>' + a.cat + '</em><i></i>' + a.dateLabel + '<i></i>' + a.read + ' min read</p>' +
         '<h2>' + a.title + '</h2>' +
         '<p class="ar-deck">' + a.deck + '</p>' +
-        '<div class="ar-byline">STAIR Digital &middot; AI Intelligence Briefing</div>' +
+        '<div class="ar-byline">' + credit + '</div>' +
       '</header>' +
       '<div class="ar-copy">' + blocks(a.body) + '</div>';
 
@@ -481,7 +577,8 @@
     var sheet = document.getElementById('artPrintBody');
     if (sheet) {
       sheet.innerHTML =
-        '<p class="ap-kicker">AI Intelligence Briefing &middot; ' + a.dateLabel + '</p>' +
+        '<p class="ap-kicker">' + label + ' &middot; ' + a.dateLabel +
+          (a.by ? ' &middot; By ' + a.by : '') + '</p>' +
         '<h1>' + a.title + '</h1>' +
         '<p class="ap-deck">' + a.deck + '</p>' +
         '<div class="ap-copy">' + blocks(a.body) + '</div>';

@@ -132,5 +132,48 @@
     }
   }
 
-  document.querySelectorAll('[data-roundcarousel]').forEach(init);
+  /* Build the ring only once it is nearly in view.
+     init() writes thirty background-image URLs, so calling it at load time
+     starts thirty downloads immediately. On the Industries page the ring sits
+     more than five screens down, which meant roughly two megabytes of images
+     competing with the content at the top of the page for every visitor,
+     including the ones who never scroll that far.
+     The margin is one and a half screens, so the frames are already in the
+     cache by the time anyone arrives at the section and the spin starts on a
+     complete ring rather than filling in. */
+  function whenNear(host) {
+    var built = false;
+    var io = null;
+
+    function build() {
+      if (built) return;
+      built = true;
+      if (io) io.disconnect();
+      window.removeEventListener('scroll', near);
+      window.removeEventListener('resize', near);
+      init(host);
+    }
+
+    /* Failsafe, in the same spirit as the one on the book: if the observer
+       never delivers - no support, or a context that is not running the
+       rendering lifecycle - a decorative section must still appear rather
+       than leave a hole in the page. One rect read per scroll event, and the
+       listener removes itself the moment the ring is built. */
+    function near() {
+      var r = host.getBoundingClientRect();
+      if (r.top < window.innerHeight * 2.5 && r.bottom > -window.innerHeight) build();
+    }
+
+    if ('IntersectionObserver' in window) {
+      io = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) build();
+      }, { rootMargin: '150% 0px' });
+      io.observe(host);
+    }
+    window.addEventListener('scroll', near, { passive: true });
+    window.addEventListener('resize', near, { passive: true });
+    near();
+  }
+
+  document.querySelectorAll('[data-roundcarousel]').forEach(whenNear);
 })();

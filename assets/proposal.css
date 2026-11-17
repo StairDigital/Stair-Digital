@@ -281,5 +281,3 @@
 .pr-done p{font-size:clamp(14px,1.05vw,16px);line-height:1.65;color:var(--ink-soft);
   max-width:48ch;margin:0 auto 12px}
 .pr-done strong{color:var(--ink);font-weight:650}
-.pr-done-soon{font-family:var(--disp);font-size:clamp(9.5px,.8vw,11px);letter-spacing:.2em;
-  text-transform:uppercase;color:var(--teal-deep);margin-top:20px !important}

@@ -313,10 +313,11 @@
      so turning it back on is a one-line change. */
   var COMING_SOON = true;
 
-  /* Replaces the form with a plain confirmation. Deliberately says what
-     will happen and when, rather than a bare "coming soon" that leaves
-     someone who just typed their phone number wondering if it sent. */
-  function comingSoon(name, company) {
+  /* Replaces the form with a short confirmation. Two lines only: the
+     enquiry has been received and the generator is not ready. It makes no
+     promise about who replies or when, because that is not ours to make
+     from a form. */
+  function comingSoon(name) {
     var card = document.getElementById('prIntro');
     if (!card) return;
     var first = (name || '').trim().split(/\s+/)[0] || 'there';
@@ -328,11 +329,7 @@
           '<path d="M4 12.5 9.5 18 20 6.5"/></svg>' +
         '</span>' +
         '<h2>Thank you, ' + esc(first) + '.</h2>' +
-        '<p>The self-serve blueprint is still under development. We are building it to a ' +
-          'standard we are willing to put our name on, and it is not there yet.</p>' +
-        '<p>Your details for <strong>' + esc(company) + '</strong> are with us, and we will ' +
-          'be in touch.</p>' +
-        '<p class="pr-done-soon">Self-serve blueprints, coming soon.</p>' +
+        '<p>The self-serve blueprint is still under development.</p>' +
       '</div>';
     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
@@ -588,7 +585,7 @@
          false and the full flow below returns untouched. */
       if (COMING_SOON) {
         sendLead({ name: n, company: c, comingSoon: true }, { email: em, phone: ph });
-        comingSoon(n, c);
+        comingSoon(n);
         return;
       }
 

@@ -13,8 +13,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,300..800;1,300..800&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=99">
-<link rel="stylesheet" href="assets/engagements.css?v=99">
+<link rel="stylesheet" href="assets/style.css?v=100">
+<link rel="stylesheet" href="assets/engagements.css?v=100">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.css" integrity="sha384-gvLq/iOMNnPchdosgVym5huSVkKipHCQaqSw2Eg0V52Mzmlf169ZOsXcNc2cNu8x" crossorigin="anonymous" referrerpolicy="no-referrer">
 </head>
 <body>
@@ -47,205 +47,166 @@
 </div>
 
 <!-- ============ FULL-VIEWPORT HERO ============ -->
-<!-- ============ HERO ============
-     Typographic, on the house ivory. The page this replaced ran a WebGL
-     wave field here; this one carries the strongest of the fourteen voices
-     instead, so the page demonstrates what it is in the first screen. -->
-<section class="eg-hero">
+<section class="eng-hero">
+  <div class="eng-hero-field" data-linewaves data-brightness="0.6" data-speed="0.8"
+       data-color1="#0E9C93" data-color2="#5FC9BF" data-color3="#F0854B" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="eg-hero-grid">
-      <div class="rv">
-        <div class="eyebrow">Engagements</div>
-        <h1>Measured outcomes, <em>in their own words.</em></h1>
-        <p class="eg-lead">The proof of the work is what leaders say once the report would
-          normally have been filed and forgotten. Every engagement is confidential, so the
-          voices here are attributed by sector, not by name. The words are theirs.</p>
-      </div>
+    <h1 class="rv">Measured outcomes, <em>in their own words.</em></h1>
+    <p class="lead rv">The proof of the work is what leaders say once the report would normally have been
+      filed and forgotten. Every engagement is confidential, so the voices here are attributed by sector,
+      not by name. The words are theirs.</p>
+    <div class="eng-hero-quote rv" id="ehq" aria-live="off">
+      <i></i>
+      <span class="ehq-rot" id="ehqWrap"><b id="ehqText">They stay until the thing is done.</b>
+        &nbsp;&nbsp;<span id="ehqAttr">Managing Director, ₹1,000 crore foods group</span></span>
+    </div>
+  </div>
+  <div class="eng-hero-cue" aria-hidden="true"><span>The voices</span>
+    <svg viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+</section>
 
-      <figure class="eg-feature rv">
-        <blockquote>They walked the plant, sat through the interviews, read the numbers and then told us what they thought, including the parts we did not want to hear. They do not leave a report behind and disappear.</blockquote>
-        <figcaption>
-          <b>Managing Director</b>
-          <span>₹1,000 crore dairy and foods group</span>
-        </figcaption>
-      </figure>
+<!-- ============ TESTIMONIALS: SPINNING SECTOR RING + CENTRE READER ============ -->
+<section class="et" id="testimonials">
+  <div class="et-bg" aria-hidden="true"></div>
+  <div class="et-head">
+    <div class="eyebrow rv">What clients say</div>
+    <h2 class="rv">A ring of proof. <em>Spin it.</em></h2>
+    <p class="rv">Every card is a voice from an engagement, and this is only a selection. Let the ring turn, or
+      grab and spin it, and the words at the centre change with it. Drawn from reviews on the record.</p>
+  </div>
+
+  <div class="et-stage" data-circular-testimonials data-speed="3.2" data-count="34" data-count-narrow="18"
+       aria-label="Client testimonials by sector">
+    <div class="et-ring">
+      <article class="et-card" style="--ca:#F0854B" data-accent="#F0854B"
+        data-role="Managing Director" data-sector="₹1,000 crore dairy and foods group"
+        data-quote="They walked the plant, sat through the interviews, read the numbers and then told us what they thought, including the parts we did not want to hear. They do not leave a report behind and disappear.">
+        <q>&#8220;</q><b>Dairy &amp; Foods</b></article>
+
+      <article class="et-card" style="--ca:#D96A30" data-accent="#D96A30"
+        data-role="Promoter Director" data-sector="Family owned FMCG manufacturer"
+        data-quote="The organisation design came first and the searches came second. By the time we went to market we knew exactly what we were looking for, and why.">
+        <q>&#8220;</q><b>Family FMCG</b></article>
+
+      <article class="et-card" style="--ca:#0E9C93" data-accent="#0E9C93"
+        data-role="Managing Director" data-sector="Regulated premedia for global pharma"
+        data-quote="What began as a conversation about artificial intelligence became four defined initiatives, each with an architecture, a commercial model and a set of risks we had not considered.">
+        <q>&#8220;</q><b>Regulated Pharma</b></article>
+
+      <article class="et-card" style="--ca:#0B857D" data-accent="#0B857D"
+        data-role="Chief Technology Officer" data-sector="Pharmaceutical services and digital delivery"
+        data-quote="It moved us from a prototype mindset to a platform mindset before we had written the code that would have been difficult to unwind.">
+        <q>&#8220;</q><b>Pharma Delivery</b></article>
+
+      <article class="et-card" style="--ca:#3D6B8A" data-accent="#3D6B8A"
+        data-role="Senior Leadership" data-sector="Listed engineering and defence group"
+        data-quote="Ninety one pages describing how the organisation actually works rather than how we assume it works. For the first time engineering, procurement and planning were arguing from the same document.">
+        <q>&#8220;</q><b>Engineering &amp; Defence</b></article>
+
+      <article class="et-card" style="--ca:#4E7CA8" data-accent="#4E7CA8"
+        data-role="AI Centre of Excellence" data-sector="Listed engineering and defence conglomerate"
+        data-quote="Entirely on premise, no external interfaces, full audit trails, and a human in the loop wherever confidence is low. They designed around our constraints rather than around the technology.">
+        <q>&#8220;</q><b>Defence AI</b></article>
+
+      <article class="et-card" style="--ca:#7A5C8E" data-accent="#7A5C8E"
+        data-role="Managing Director &amp; CEO" data-sector="National digital public infrastructure"
+        data-quote="They helped us articulate what the organisation could be at national scale, and they held the technical architecture and the policy argument in the same document.">
+        <q>&#8220;</q><b>Digital Public Infra</b></article>
+
+      <article class="et-card" style="--ca:#B8863B" data-accent="#B8863B"
+        data-role="Managing Director" data-sector="International executive search firm"
+        data-quote="We brought three decades of executive search. They brought governance, capital markets and a view of where boards are going. The joint practice is sharper than either of us would have built alone.">
+        <q>&#8220;</q><b>Board &amp; Governance</b></article>
+
+      <article class="et-card" style="--ca:#8E6A9E" data-accent="#8E6A9E"
+        data-role="Partner" data-sector="Leadership search firm"
+        data-quote="Search partners are rarely told why a profile did not work. We are told, in detail, every time. Our submissions improved measurably as a result.">
+        <q>&#8220;</q><b>Executive Search</b></article>
+
+      <article class="et-card" style="--ca:#5F8A5A" data-accent="#5F8A5A"
+        data-role="Founder" data-sector="Industrial energy intelligence platform"
+        data-quote="They pushed us towards conservative savings assumptions rather than ambitious ones. That is unusual advice, and it was the correct advice.">
+        <q>&#8220;</q><b>Energy Intelligence</b></article>
+
+      <article class="et-card" style="--ca:#12A79D" data-accent="#12A79D"
+        data-role="Senior Representative" data-sector="Enterprise technology partner"
+        data-quote="They brought us a client requirement that had already been thought through. Priority use cases, infrastructure position, integration expectations and a phased rollout, before we had asked a single question.">
+        <q>&#8220;</q><b>Enterprise Tech</b></article>
+
+      <article class="et-card" style="--ca:#0B857D" data-accent="#0B857D"
+        data-role="Senior Representative" data-sector="Software quality platform"
+        data-quote="The technical evaluation they ran on our behalf was the most thorough we have been through. Every capability was tested against a real workflow rather than a feature list.">
+        <q>&#8220;</q><b>Quality Platform</b></article>
+
+      <article class="et-card" style="--ca:#3D6B8A" data-accent="#3D6B8A"
+        data-role="Senior Representative" data-sector="International research university"
+        data-quote="Most industry partners ask which universities are best. They asked which research groups matched the capability they needed.">
+        <q>&#8220;</q><b>Research University</b></article>
+
+      <article class="et-card" style="--ca:#F0854B" data-accent="#F0854B"
+        data-role="Chief Executive" data-sector="International digital ecosystem body"
+        data-quote="A thoughtful bridge between the Indian and African technology ecosystems, focused on where digital infrastructure, artificial intelligence and policy actually intersect.">
+        <q>&#8220;</q><b>Global Ecosystem</b></article>
+    </div>
+
+    <div class="et-reader" aria-live="polite">
+      <div class="et-box">
+        <span class="et-r-mark" aria-hidden="true">&#8220;</span>
+        <p class="et-r-quote"></p>
+        <div class="et-r-meta">
+          <span class="et-r-dot" aria-hidden="true"></span>
+          <span class="et-r-role"></span>
+          <span class="et-r-sep" aria-hidden="true"></span>
+          <span class="et-r-sector"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============ PROOF IN NUMBERS ============ -->
+<section class="fig">
+  <div class="fig-aurora" aria-hidden="true"><div class="fig-aurora-anim"></div></div>
+  <div class="wrap">
+    <div class="fig-head">
+      <div class="eyebrow rv">Proof in numbers</div>
+      <h2 class="rv">The work, <em>counted.</em></h2>
+    </div>
+    <div class="fig-grid rv">
+      <div class="fig-cell"><div class="fig-n" data-to="40"><span class="cnt">40</span><small>+</small></div><div class="fig-d">Years in the boardrooms of India's largest listed companies.</div></div>
+      <div class="fig-cell"><div class="fig-n" data-to="100"><span class="cnt">100</span><small>+</small></div><div class="fig-d">Board and advisory positions held across four decades.</div></div>
+      <div class="fig-cell"><div class="fig-n" data-to="1000"><span class="pre">&#8377;</span><span class="cnt">1000</span><small>cr+</small></div><div class="fig-d">The turnover of the enterprises this work is built for.</div></div>
+      <div class="fig-cell"><div class="fig-n" data-to="10"><span class="cnt">10</span><small>X</small></div><div class="fig-d">The scale every engagement is designed to reach.</div></div>
     </div>
   </div>
 </section>
 
-<!-- ============ THE FIGURES ============ -->
-<section class="eg-figs">
+<!-- ============ PULL-QUOTE DIVIDER (light, auto-rotating) ============ -->
+<section class="pq">
+  <div class="pq-field" data-linewaves data-brightness="0.9" data-speed="0.5"
+       data-color1="#0E9C93" data-color2="#5FC9BF" data-color3="#F0854B" aria-hidden="true"></div>
   <div class="wrap">
-      <div class="eg-fig rv">
-        <b><span class="eg-n" data-to="40">0</span><i>+</i></b>
-        <span>Years in the boardrooms of India&rsquo;s largest listed companies.</span>
-      </div>
-      <div class="eg-fig rv">
-        <b><span class="eg-n" data-to="100">0</span><i>+</i></b>
-        <span>Board and advisory positions held across four decades.</span>
-      </div>
-      <div class="eg-fig rv">
-        <b>&#8377;<span class="eg-n" data-to="1000">0</span><i>cr+</i></b>
-        <span>The turnover of the enterprises this work is built for.</span>
-      </div>
-      <div class="eg-fig rv">
-        <b><span class="eg-n" data-to="10">0</span><i>X</i></b>
-        <span>The scale every engagement is designed to reach.</span>
-      </div>
+    <q id="pqQuote" class="pq-rot">They do not leave a report behind and disappear. They stay until the thing is done.</q>
+    <div class="pq-attr pq-rot" id="pqAttr">Managing Director &middot; &#8377;1,000 crore dairy and foods group</div>
   </div>
 </section>
 
-<!-- ============ THE VOICES ============
-     A wall rather than a ring. Fourteen quotes a visitor can actually read,
-     filterable by sector, with no per-frame work of any kind. -->
-<section class="eg-voices" id="voices">
+<!-- ============ CLOSE / CTA ============ -->
+<section class="eng-cta">
   <div class="wrap">
-    <div class="eg-head rv">
-      <div class="eyebrow">What clients say</div>
-      <h2>Fourteen voices, <em>on the record.</em></h2>
-      <p>Named engagements stay confidential. The sector, the seat and the words are
-        exactly as given.</p>
+    <div class="eng-cta-text">
+      <h2 class="rv">Your outcome could be the next voice on this ring.</h2>
+      <p class="rv">Every engagement above began with one conversation. Tell us what the board is wrestling with,
+        and we will tell you plainly whether we can help.</p>
     </div>
-
-    <div class="eg-filter rv" role="group" aria-label="Filter voices by sector">
-        <button class="eg-chip" type="button" data-filter="all" aria-pressed="true">All voices<i>14</i></button>
-        <button class="eg-chip" type="button" data-filter="consumer" aria-pressed="false">Manufacturing &amp; Consumer<i>2</i></button>
-        <button class="eg-chip" type="button" data-filter="pharma" aria-pressed="false">Pharma &amp; Life sciences<i>2</i></button>
-        <button class="eg-chip" type="button" data-filter="defence" aria-pressed="false">Engineering &amp; Defence<i>2</i></button>
-        <button class="eg-chip" type="button" data-filter="public" aria-pressed="false">Public &amp; Policy<i>2</i></button>
-        <button class="eg-chip" type="button" data-filter="talent" aria-pressed="false">Talent &amp; Search<i>2</i></button>
-        <button class="eg-chip" type="button" data-filter="tech" aria-pressed="false">Technology &amp; Research<i>4</i></button>
-    </div>
-
-    <div class="eg-wall" id="egWall">
-        <figure class="eg-card" data-group="consumer" style="--c:#F0854B">
-          <blockquote class="eg-q">They walked the plant, sat through the interviews, read the numbers and then told us what they thought, including the parts we did not want to hear. They do not leave a report behind and disappear.</blockquote>
-          <figcaption class="eg-meta">
-            <b>Managing Director</b>
-            <span>₹1,000 crore dairy and foods group</span>
-          </figcaption>
-        </figure>
-        <figure class="eg-card" data-group="consumer" style="--c:#D96A30">
-          <blockquote class="eg-q">The organisation design came first and the searches came second. By the time we went to market we knew exactly what we were looking for, and why.</blockquote>
-          <figcaption class="eg-meta">
-            <b>Promoter Director</b>
-            <span>Family owned FMCG manufacturer</span>
-          </figcaption>
-        </figure>
-        <figure class="eg-card" data-group="pharma" style="--c:#0E9C93">
-          <blockquote class="eg-q">What began as a conversation about artificial intelligence became four defined initiatives, each with an architecture, a commercial model and a set of risks we had not considered.</blockquote>
-          <figcaption class="eg-meta">
-            <b>Managing Director</b>
-            <span>Regulated premedia for global pharma</span>
-          </figcaption>
-        </figure>
-        <figure class="eg-card" data-group="pharma" style="--c:#0B857D">
-          <blockquote class="eg-q">It moved us from a prototype mindset to a platform mindset before we had written the code that would have been difficult to unwind.</blockquote>
-          <figcaption class="eg-meta">
-            <b>Chief Technology Officer</b>
-            <span>Pharmaceutical services and digital delivery</span>
-          </figcaption>
-        </figure>
-        <figure class="eg-card" data-group="defence" style="--c:#3D6B8A">
-          <blockquote class="eg-q">Ninety one pages describing how the organisation actually works rather than how we assume it works. For the first time engineering, procurement and planning were arguing from the same document.</blockquote>
-          <figcaption class="eg-meta">
-            <b>Senior Leadership</b>
-            <span>Listed engineering and defence group</span>
-          </figcaption>
-        </figure>
-        <figure class="eg-card" data-group="defence" style="--c:#4E7CA8">
-          <blockquote class="eg-q">Entirely on premise, no external interfaces, full audit trails, and a human in the loop wherever confidence is low. They designed around our constraints rather than around the technology.</blockquote>
-          <figcaption class="eg-meta">
-            <b>AI Centre of Excellence</b>
-            <span>Listed engineering and defence conglomerate</span>
-          </figcaption>
-        </figure>
-        <figure class="eg-card" data-group="public" style="--c:#7A5C8E">
-          <blockquote class="eg-q">They helped us articulate what the organisation could be at national scale, and they held the technical architecture and the policy argument in the same document.</blockquote>
-          <figcaption class="eg-meta">
-            <b>Managing Director &amp; CEO</b>
-            <span>National digital public infrastructure</span>
-          </figcaption>
-        </figure>
-        <figure class="eg-card" data-group="talent" style="--c:#B8863B">
-          <blockquote class="eg-q">We brought three decades of executive search. They brought governance, capital markets and a view of where boards are going. The joint practice is sharper than either of us would have built alone.</blockquote>
-          <figcaption class="eg-meta">
-            <b>Managing Director</b>
-            <span>International executive search firm</span>
-          </figcaption>
-        </figure>
-        <figure class="eg-card" data-group="talent" style="--c:#8E6A9E">
-          <blockquote class="eg-q">Search partners are rarely told why a profile did not work. We are told, in detail, every time. Our submissions improved measurably as a result.</blockquote>
-          <figcaption class="eg-meta">
-            <b>Partner</b>
-            <span>Leadership search firm</span>
-          </figcaption>
-        </figure>
-        <figure class="eg-card" data-group="tech" style="--c:#5F8A5A">
-          <blockquote class="eg-q">They pushed us towards conservative savings assumptions rather than ambitious ones. That is unusual advice, and it was the correct advice.</blockquote>
-          <figcaption class="eg-meta">
-            <b>Founder</b>
-            <span>Industrial energy intelligence platform</span>
-          </figcaption>
-        </figure>
-        <figure class="eg-card" data-group="tech" style="--c:#12A79D">
-          <blockquote class="eg-q">They brought us a client requirement that had already been thought through. Priority use cases, infrastructure position, integration expectations and a phased rollout, before we had asked a single question.</blockquote>
-          <figcaption class="eg-meta">
-            <b>Senior Representative</b>
-            <span>Enterprise technology partner</span>
-          </figcaption>
-        </figure>
-        <figure class="eg-card" data-group="tech" style="--c:#0B857D">
-          <blockquote class="eg-q">The technical evaluation they ran on our behalf was the most thorough we have been through. Every capability was tested against a real workflow rather than a feature list.</blockquote>
-          <figcaption class="eg-meta">
-            <b>Senior Representative</b>
-            <span>Software quality platform</span>
-          </figcaption>
-        </figure>
-        <figure class="eg-card" data-group="tech" style="--c:#3D6B8A">
-          <blockquote class="eg-q">Most industry partners ask which universities are best. They asked which research groups matched the capability they needed.</blockquote>
-          <figcaption class="eg-meta">
-            <b>Senior Representative</b>
-            <span>International research university</span>
-          </figcaption>
-        </figure>
-        <figure class="eg-card" data-group="public" style="--c:#F0854B">
-          <blockquote class="eg-q">A thoughtful bridge between the Indian and African technology ecosystems, focused on where digital infrastructure, artificial intelligence and policy actually intersect.</blockquote>
-          <figcaption class="eg-meta">
-            <b>Chief Executive</b>
-            <span>International digital ecosystem body</span>
-          </figcaption>
-        </figure>
-    </div>
-
-    <p class="eg-count" id="egCount" aria-live="polite"></p>
-  </div>
-</section>
-
-<!-- ============ PULL QUOTE ============ -->
-<section class="eg-pq">
-  <div class="wrap">
-    <blockquote class="rv">&ldquo;They do not leave a report behind and disappear.
-      They stay until the thing is done.&rdquo;</blockquote>
-    <span class="eg-pq-by rv">Managing Director &middot; &#8377;1,000 crore dairy and foods group</span>
-  </div>
-</section>
-
-<!-- ============ CTA ============ -->
-<section class="eg-cta">
-  <div class="wrap">
-    <div class="eyebrow rv">Start here</div>
-    <h2 class="rv">Your outcome could be <em>the next voice here.</em></h2>
-    <p class="rv">Every engagement above began with one conversation. Tell us what the board
-      is wrestling with, and we will tell you plainly whether we can help.</p>
-    <div class="actions rv">
-      <button class="btn btn-primary lg" data-consult>Let&rsquo;s Talk
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </button>
+    <div class="eng-cta-row">
+      <button class="btn-pop" data-consult>Let's Talk<svg viewBox="0 0 24 24" style="margin-left:8px"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
     </div>
   </div>
 </section>
 
+<!-- ============ FOOTER ============ -->
 <footer class="ft">
   <div class="wrap">
     <div class="ft-grid">
@@ -296,14 +257,16 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.min.js" integrity="sha384-ClD7pCgIUz5M81HT8aZmMxCsWmfsycmBiwL5gy1pUbdWHvICIbea22N9sTtAFotA" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="assets/fx-core.js?v=99"></script>
-<script src="assets/perf-probe.js?v=99"></script>
-<script src="assets/lenis-init.js?v=99"></script>
-<script src="assets/site.js?v=99"></script>
-<script src="assets/anim-idle.js?v=99" defer></script>
-<script src="assets/engagements.js?v=99"></script>
-<script src="assets/kinetic-grid.js?v=99"></script>
-<script src="assets/liquid-glass.js?v=99"></script>
+<script src="assets/fx-core.js?v=100"></script>
+<script src="assets/perf-probe.js?v=100"></script>
+<script src="assets/lenis-init.js?v=100"></script>
+<script src="assets/site.js?v=100"></script>
+<script src="assets/anim-idle.js?v=100" defer></script>
+<script src="assets/line-waves.js?v=100"></script>
+<script src="assets/circular-testimonials.js?v=100"></script>
+<script src="assets/engagements.js?v=100"></script>
+<script src="assets/kinetic-grid.js?v=100"></script>
+<script src="assets/liquid-glass.js?v=100"></script>
 <script>
 /* rotate the hero micro-quote through a few sector-attributed lines */
 (function(){

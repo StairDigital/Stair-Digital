@@ -44,12 +44,21 @@
     var count = Math.round(num(root, isNarrow ? "data-count-narrow" : "data-count", isNarrow ? 18 : 34));
     count = Math.max(pool.length, count);
 
+    /* The chips sit inside a spinner, and the spinner sits inside the ring.
+       The ring only tilts; the spinner only turns. Keeping the two on
+       separate elements is what makes one write a frame geometrically
+       identical to turning every chip (see the note further down). */
+    var spin = document.createElement("div");
+    spin.className = "et-spin";
+    spin.style.cssText = "position:absolute;left:0;top:0;width:0;height:0;transform-style:preserve-3d";
+    ring.appendChild(spin);
+
     // fill the ring to `count` by cloning the pool in order
     var items = [];
     for (var k = 0; k < count; k++) {
       var src = pool[k % pool.length];
       var el = (k < pool.length) ? src : src.cloneNode(true);
-      if (k >= pool.length) ring.appendChild(el);
+      spin.appendChild(el);
       items.push(el);
     }
 
@@ -73,15 +82,31 @@
     gsap.set(ring, { rotationX: tilt });
 
     /* One writer for the whole ring, not one per chip.
-       Every chip sits at the ring's centre and is pushed out to the rim by
-       its own transform-origin, so adding the same angle to all of them is
-       the same rotation as turning the ring once. The old version wrote a
-       transform to every chip on every frame: with this many chips that is
-       around a thousand style invalidations a second, which measured as
-       1,954ms of style recalculation per five seconds and made this the
-       most expensive thing on the site. Turning the parent instead is one
-       write a frame for an identical picture. */
-    var setRingZ = gsap.quickSetter(ring, "rotationZ", "deg");
+
+       Writing a transform to every chip on every frame was around a thousand
+       style invalidations a second - measured at 1,954ms of style
+       recalculation per five seconds, the most expensive thing on the site.
+
+       The first attempt at fixing that wrote rotationZ straight onto the
+       tilted ring, and it was wrong twice over: it turned the ring about the
+       screen's axis instead of the axis of its own tilted plane, and about
+       the ring's corner instead of the centre the chips orbit. The chips
+       slid out of their circle as it turned.
+
+       Each chip is pushed out to the rim by its own transform-origin, a
+       radius below itself. That one shared point is the centre of the orbit.
+       The spinner turns about exactly that point, inside the ring's tilt, so
+       a spinner angle of A is the same matrix as adding A to every chip:
+       rotate(base) then rotate(A) about one centre is rotate(base + A). */
+    function seatSpinner() {
+      var c = items[0];
+      /* the chip's own transform-origin, expressed in the spinner's space */
+      var ox = c.offsetLeft + c.offsetWidth / 2;
+      var oy = c.offsetTop + radius;
+      gsap.set(spin, { transformOrigin: ox + "px " + oy + "px" });
+    }
+    seatSpinner();
+    var setRingZ = gsap.quickSetter(spin, "rotation", "deg");
 
     // ── entrance: ring settles into tilt, chips bloom in. Opacity stays with
     // CSS (default 1) so a paused/backgrounded rAF can never leave it hidden. ──
@@ -207,7 +232,7 @@
         gsap.set(item, { transformOrigin: "50% " + R + "px" });
       });
       gsap.set(ring, { rotationX: T });
-      radius = R; tilt = T; parallax = root.getAttribute("data-parallax") !== "false" && !n;
+      radius = R; tilt = T; seatSpinner(); parallax = root.getAttribute("data-parallax") !== "false" && !n;
     });
   }
 

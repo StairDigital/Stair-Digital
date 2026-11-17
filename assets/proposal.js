@@ -428,7 +428,7 @@
           /* data-consult opens the site's own email / call chooser */
           '<button class="pr-cta-b" data-consult>Book a meeting</button>' +
         '</div>' +
-        '<footer class="pr-sig"><div><b>Shubham Saraff</b><span>Cofounder &amp; Director</span>' +
+        '<footer class="pr-sig"><div><b>Shubham Saraff</b><span>Co-founder &amp; CEO</span>' +
           '<span>saraff@stair.digital &middot; +91 99302 20342 &middot; www.stair.digital</span></div>' +
           '<img src="assets/stair-mark.png" alt="" class="pr-mark"></footer>' +
       '</article>' +

@@ -1,0 +1,186 @@
+/* ============================================================
+   BOARD SERVICES — the handoff to EMA STAIR.
+
+   This is not another capability panel, and it should not look like one.
+   EMA STAIR Board Services is a separate venture with EMA Partners India
+   and lives at its own domain, so the band reads as a door to somewhere
+   else rather than as another section of this site: a darker ground, its
+   own lockup, and a drawing that belongs to it.
+
+   The drawing is a board table seen from above with nine seats. Eight fill
+   in on entry; the ninth stays open and amber, because an empty seat
+   correctly found is the thing the venture sells.
+
+   Every animation here is an ENTRANCE, not a loop. Nothing on this band
+   runs forever - the site had a problem with exactly that - and the only
+   properties animated are transform and opacity, so the compositor owns
+   all of it.
+   ============================================================ */
+
+.bsv{background:var(--ivory);padding:clamp(40px,6vh,76px) 0 clamp(52px,8vh,104px)}
+.bsv .wrap{max-width:var(--maxw);margin:0 auto;padding:0 6vw}
+
+/* ---- the panel itself is the link ---- */
+.bsv-card{position:relative;display:grid;grid-template-columns:1.15fr .85fr;
+  align-items:center;gap:clamp(28px,4vw,64px);
+  background:linear-gradient(152deg,#11302C 0%,#0C2320 58%,#081917 100%);
+  border:1px solid rgba(127,227,217,.16);border-radius:22px;
+  padding:clamp(32px,4.4vw,60px) clamp(26px,4vw,58px);
+  color:var(--ivory);overflow:hidden;isolation:isolate;
+  transition:transform .6s var(--ease),border-color .5s var(--ease),
+             box-shadow .6s var(--ease);
+  will-change:transform}
+.bsv-card::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(120% 90% at 86% 10%,rgba(14,156,147,.26),transparent 62%),
+    radial-gradient(90% 80% at 6% 96%,rgba(240,133,75,.12),transparent 64%)}
+.bsv-card:hover,.bsv-card:focus-visible{border-color:rgba(127,227,217,.38);
+  box-shadow:0 40px 70px -46px rgba(6,22,20,.9)}
+.bsv-card:focus-visible{outline:2px solid var(--amber);outline-offset:4px}
+
+/* ---- left: the words ---- */
+.bsv-k{font-family:var(--disp);font-size:clamp(9.5px,.78vw,11px);letter-spacing:.2em;
+  text-transform:uppercase;color:#7FE3D9;display:flex;align-items:center;gap:10px;
+  flex-wrap:wrap;line-height:1.5}
+.bsv-k i{font-style:normal;color:rgba(250,248,243,.42)}
+.bsv-card h2{font-family:var(--serif);font-weight:800;letter-spacing:-.03em;line-height:1.06;
+  font-size:clamp(27px,3.3vw,46px);margin:16px 0 0;color:#fff}
+.bsv-card h2 em{font-style:italic;color:#7FE3D9}
+.bsv-lead{font-size:clamp(14px,1.08vw,16.5px);line-height:1.62;margin-top:14px;
+  color:rgba(250,248,243,.78);max-width:46ch}
+
+/* the two mandates, as a rule-separated list rather than boxes */
+.bsv-m{list-style:none;margin:clamp(20px,2.6vw,30px) 0 0;padding:0;
+  border-top:1px solid rgba(250,248,243,.14)}
+.bsv-m li{display:flex;gap:14px;align-items:baseline;
+  padding:13px 0;border-bottom:1px solid rgba(250,248,243,.14)}
+.bsv-m b{font-family:var(--disp);font-size:clamp(8.5px,.72vw,10px);letter-spacing:.18em;
+  color:rgba(250,248,243,.5);flex:0 0 auto;padding-top:3px}
+.bsv-m span{display:block}
+.bsv-m strong{display:block;font-weight:650;font-size:clamp(14px,1.1vw,16.5px);color:#fff;
+  letter-spacing:-.01em}
+.bsv-m em{display:block;font-style:normal;font-size:clamp(12.5px,.95vw,14px);
+  color:rgba(250,248,243,.62);line-height:1.5;margin-top:3px}
+
+.bsv-go{display:inline-flex;align-items:center;gap:11px;margin-top:clamp(22px,2.8vw,32px);
+  font-family:var(--disp);font-size:clamp(12px,.95vw,14px);font-weight:600;letter-spacing:.02em;
+  color:#fff;padding:13px 22px;border-radius:999px;
+  background:linear-gradient(120deg,var(--teal),var(--teal-deep));
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.bsv-go svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .45s var(--ease)}
+.bsv-card:hover .bsv-go{box-shadow:0 14px 30px -14px rgba(14,156,147,.9)}
+.bsv-card:hover .bsv-go svg{transform:translateX(4px)}
+
+/* ---- right: the table ---- */
+.bsv-art{position:relative;display:grid;place-items:center}
+.bsv-art svg{width:100%;height:auto;max-width:360px;display:block;overflow:visible}
+.bsv-table{fill:rgba(250,248,243,.045);stroke:rgba(127,227,217,.3);stroke-width:1.2}
+.bsv-grain{fill:none;stroke:rgba(250,248,243,.10);stroke-width:1}
+
+/* Seats bloom in once, staggered, on the reveal the rest of the site uses.
+   Styled to look right AT REST, so if the reveal never fires - no JS, a
+   backgrounded tab - the board simply reads as fully seated. */
+.bsv-seat{fill:rgba(250,248,243,.9);stroke:none;transform-origin:center;transform-box:fill-box}
+.bsv-seat-open{fill:none;stroke:var(--amber);stroke-width:2;stroke-dasharray:3.4 3.4}
+/* Delays are hung off explicit classes, not :nth-of-type. The seats and the
+   table are all <circle>, so nth-of-type would count the table too and every
+   seat would fire one step late. */
+.bsv .rv.in .bsv-seat,.bsv .rv.in .bsv-seat-open{animation:bsvSeat .62s var(--ease) backwards}
+.bsv .rv.in .s1{animation-delay:.10s}
+.bsv .rv.in .s2{animation-delay:.17s}
+.bsv .rv.in .s3{animation-delay:.24s}
+.bsv .rv.in .s4{animation-delay:.31s}
+.bsv .rv.in .s5{animation-delay:.38s}
+.bsv .rv.in .s6{animation-delay:.45s}
+.bsv .rv.in .s7{animation-delay:.52s}
+.bsv .rv.in .s8{animation-delay:.59s}
+.bsv .rv.in .bsv-seat-open{animation-delay:.80s;animation-duration:.8s}
+@keyframes bsvSeat{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:scale(1)}}
+
+.bsv-cap{font-family:var(--disp);font-size:clamp(8.5px,.7vw,10px);letter-spacing:.18em;
+  text-transform:uppercase;fill:rgba(250,248,243,.46)}
+.bsv-seatnote{font-family:var(--disp);font-size:clamp(8.5px,.7vw,10px);letter-spacing:.14em;
+  text-transform:uppercase;fill:var(--amber)}
+
+/* ---- the pointer tilt ----
+   Driven by board.js writing --rx/--ry. Pointer only, and only on devices
+   with a real cursor: a phone has nothing to hover with, and tilting under
+   a thumb reads as a glitch rather than as depth. */
+@media(hover:hover) and (pointer:fine){
+  .bsv-card{transform:perspective(1100px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg))}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .bsv .rv.in .bsv-seat,.bsv .rv.in .bsv-seat-open{animation:none}
+  .bsv-card{transition:none}
+  .bsv-card:hover .bsv-go svg{transform:none}
+}
+
+/* ---- narrow ---- */
+@media(max-width:900px){
+  .bsv-card{grid-template-columns:1fr;gap:clamp(24px,5vw,36px)}
+  /* The table goes first on a phone: it says "board" before a word is read,
+     and it stops the panel opening on a wall of type. */
+  .bsv-art{order:-1}
+  .bsv-art svg{max-width:220px}
+  .bsv-go{width:100%;justify-content:center}
+  /* The kicker wraps to two lines here, which left the separator stranded
+     at the end of the first. Drop it and let the line break do that job. */
+  .bsv-k{display:block}
+  .bsv-k i{display:none}
+}
+
+/* ============================================================
+   SLIM VARIANT — the seventh line on Capabilities.
+
+   Deliberately NOT a .cap-item: that list is an accordion, and its script
+   assumes every item owns a .cap-summary button to toggle. More honestly,
+   this one does not open. It leaves the site, and should say so by looking
+   like a door rather than a drawer.
+   ============================================================ */
+.bsv-slim{display:flex;align-items:center;gap:clamp(16px,2.4vw,30px);
+  margin-top:clamp(18px,2.6vw,30px);
+  padding:clamp(20px,2.6vw,30px) clamp(20px,3vw,34px);
+  border-radius:16px;color:var(--ivory);
+  background:linear-gradient(140deg,#11302C,#0A1F1C 70%);
+  border:1px solid rgba(127,227,217,.18);
+  transition:border-color .45s var(--ease),transform .45s var(--ease),
+             box-shadow .45s var(--ease)}
+.bsv-slim:hover,.bsv-slim:focus-visible{border-color:rgba(127,227,217,.42);
+  transform:translateY(-2px);box-shadow:0 26px 48px -34px rgba(6,22,20,.95)}
+.bsv-slim:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+
+.bsv-slim-ic{flex:0 0 auto;display:grid;place-items:center;
+  width:clamp(42px,4vw,54px);aspect-ratio:1;border-radius:12px;
+  background:rgba(127,227,217,.10);border:1px solid rgba(127,227,217,.22)}
+.bsv-slim-ic svg{width:56%;height:56%;fill:none;stroke:#7FE3D9;stroke-width:1.6;
+  stroke-linecap:round;stroke-linejoin:round}
+
+.bsv-slim-tx{flex:1 1 auto;min-width:0}
+.bsv-slim-tx b{display:block;font-family:var(--serif);font-weight:700;
+  font-size:clamp(16px,1.4vw,21px);letter-spacing:-.01em;color:#fff}
+.bsv-slim-tx span{display:block;font-size:clamp(12.5px,1vw,14.5px);line-height:1.5;
+  color:rgba(250,248,243,.66);margin-top:4px}
+.bsv-slim-tx i{font-style:normal;font-family:var(--disp);font-size:clamp(8.5px,.72vw,10px);
+  letter-spacing:.18em;text-transform:uppercase;color:#7FE3D9;
+  display:block;margin-bottom:7px}
+
+.bsv-slim-go{flex:0 0 auto;display:grid;place-items:center;
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(127,227,217,.12);border:1px solid rgba(127,227,217,.28);
+  transition:background .45s var(--ease),transform .45s var(--ease)}
+.bsv-slim-go svg{width:17px;height:17px;fill:none;stroke:#fff;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+.bsv-slim:hover .bsv-slim-go{background:var(--teal);transform:translate(2px,-2px)}
+
+@media(max-width:700px){
+  .bsv-slim{flex-wrap:wrap}
+  .bsv-slim-tx{flex:1 1 100%;order:3}
+  .bsv-slim-go{margin-left:auto}
+}
+@media(prefers-reduced-motion:reduce){
+  .bsv-slim,.bsv-slim-go{transition:none}
+  .bsv-slim:hover{transform:none}
+}

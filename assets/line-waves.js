@@ -105,9 +105,26 @@
     gl.uniform1f(U.mInf,P.mouseInf); gl.uniform1i(U.enM,P.enableMouse?1:0);
 
     var vis = window.FX.watch(container);
+    /* Every pixel of this canvas runs the wave shader every frame, and this
+       one fills a whole hero. At 1920x1080 with the 1.5 device-pixel cap that
+       is 4.7 megapixels of fragment work per frame, which is most of why the
+       Engagements hero stutters while you scroll past it.
+
+       A budget caps the buffer and lets CSS stretch it back. The picture is
+       broad, soft bands of colour with no fine detail, so a buffer at a bit
+       over a megapixel is indistinguishable once it is scaled up - the same
+       trick the gradient wave on Research already uses. */
+    var PIXEL_BUDGET = 1200000;
+
     function resize(){
       var pr = Math.min(window.devicePixelRatio || 1, window.FX.coarse ? 1 : 1.5);
       var w=Math.max(1,Math.round(vis.w*pr)), h=Math.max(1,Math.round(vis.h*pr));
+      var over = (w*h) / PIXEL_BUDGET;
+      if (over > 1){
+        var s = Math.sqrt(over);
+        w = Math.max(1, Math.round(w/s));
+        h = Math.max(1, Math.round(h/s));
+      }
       canvas.width=w; canvas.height=h; gl.viewport(0,0,w,h);
       gl.uniform3f(U.res, w, h, w/h);
     }

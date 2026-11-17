@@ -307,13 +307,51 @@
     return L.join('\n');
   }
 
+  /* The blueprint generator is held back until it drafts something worth
+     putting a founder's name on. The form keeps running and the enquiry
+     keeps arriving; only the generated document is withheld. One switch,
+     so turning it back on is a one-line change. */
+  var COMING_SOON = true;
+
+  /* Replaces the form with a plain confirmation. Deliberately says what
+     will happen and when, rather than a bare "coming soon" that leaves
+     someone who just typed their phone number wondering if it sent. */
+  function comingSoon(name, company) {
+    var card = document.getElementById('prIntro');
+    if (!card) return;
+    var first = (name || '').trim().split(/\s+/)[0] || 'there';
+    card.innerHTML =
+      '<div class="pr-done">' +
+        '<span class="pr-done-ic" aria-hidden="true">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" ' +
+          'stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M4 12.5 9.5 18 20 6.5"/></svg>' +
+        '</span>' +
+        '<h2>Thank you, ' + esc(first) + '.</h2>' +
+        '<p>The automated blueprint is not open to the public yet &mdash; we would rather ' +
+          'hand you something a founder has read than something a machine guessed at.</p>' +
+        '<p>Your details for <strong>' + esc(company) + '</strong> are with us, and one of ' +
+          'the founders will come back to you directly with a blueprint for your ' +
+          'organisation.</p>' +
+        '<p class="pr-done-soon">Self-serve blueprints, coming soon.</p>' +
+      '</div>';
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
   /* Fire-and-forget. A failed send must never stop the visitor getting
      their blueprint, so nothing here is awaited or surfaced to them. */
   function sendLead(d, contact) {
     if (!LEAD_ACCESS_KEY) return;
     var payload = {
       access_key: LEAD_ACCESS_KEY,
-      subject: 'AI blueprint enquiry: ' + (d.company || 'unknown company'),
+      subject: (d.comingSoon ? 'Blueprint REQUEST (awaiting draft): ' : 'AI blueprint enquiry: ') +
+               (d.company || 'unknown company'),
       from_name: 'STAIR Digital website',
       /* Web3Forms uses this as the Reply-To, so hitting reply in the
          inbox answers the enquirer directly. */
@@ -323,7 +361,14 @@
       phone: contact.phone || '',
       submitted_at: new Date().toISOString(),
       page: 'proposal.html',
-      blueprint: blueprintText(d)
+      /* While the generator is held back there is no document to attach, so
+         the email says plainly that this one needs a human reply rather than
+         carrying a blank section where the blueprint used to be. */
+      blueprint: d.comingSoon
+        ? 'No blueprint was generated - the self-serve generator is switched off.\n' +
+          'This person filled in the form and was told a founder would come back\n' +
+          'to them directly. They are expecting a reply.'
+        : blueprintText(d)
     };
     try {
       fetch(LEAD_ENDPOINT, {
@@ -535,6 +580,19 @@
         return fail('Please add a phone number a founder can reach you on.', phoneEl);
       }
       err.hidden = true;
+
+      /* ---- the generator is not ready yet ----
+         Until it is, the form still does its real job: the enquiry reaches
+         devraj@stair.digital exactly as before, with the name, company,
+         email and phone. What it no longer does is hand the visitor a
+         document that was not actually researched. Flip COMING_SOON back to
+         false and the full flow below returns untouched. */
+      if (COMING_SOON) {
+        sendLead({ name: n, company: c, comingSoon: true }, { email: em, phone: ph });
+        comingSoon(n, c);
+        return;
+      }
+
       load.hidden = false;
       var i = 0; step.textContent = STEPS[0]; bar.style.width = '10%';
       var t = setInterval(function () {

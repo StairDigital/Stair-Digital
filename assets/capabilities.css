@@ -1,5 +1,10 @@
 /* ============ CAPABILITIES HERO (GLSL Hills, light) ============ */
-.cap-hero{position:relative;min-height:100vh;overflow:hidden;display:flex;align-items:center;
+/* 100vh meant the headline filled the screen on its own and the six
+   capabilities the page is named after began below the fold, so the section
+   only ever appeared half-arrived. At 82vh the first rows of the list sit in
+   view under the heading, which both shows what the page is and gives an
+   obvious reason to keep scrolling. */
+.cap-hero{position:relative;min-height:82vh;overflow:hidden;display:flex;align-items:center;
   background:linear-gradient(180deg,var(--ivory) 0%,#E9F4F1 100%)}
 .cap-hero-bg{position:absolute;inset:0;z-index:1;overflow:hidden}
 .cap-hero-bg canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
@@ -25,7 +30,10 @@
 @media(max-width:520px){.cap-hero .lead{white-space:normal;max-width:24ch}}
 
 /* ============ CAPABILITIES ACCORDION (image, click to expand, no serial numbers) ============ */
-.caps{background:linear-gradient(180deg,var(--ivory),var(--surface));padding:clamp(64px,10vh,128px) 0}
+/* Less air above the list than below it, so the first capability is already
+   on screen as the hero ends rather than a screen further down. */
+.caps{background:linear-gradient(180deg,var(--ivory),var(--surface));
+  padding:clamp(40px,6vh,76px) 0 clamp(64px,10vh,128px)}
 .caps .wrap{max-width:var(--maxw)}
 .caps-intro{max-width:620px;margin-bottom:clamp(34px,5vh,60px)}
 .caps-intro h2{font-family:var(--serif);font-weight:700;font-size:clamp(28px,3.6vw,46px);letter-spacing:-.026em;

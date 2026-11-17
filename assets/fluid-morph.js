@@ -69,18 +69,28 @@
        the compositor can move without the main thread being involved.
        Slightly oversized and offset so a drifting layer can never pull its
        own edge into view. */
-    /* All seven layers by default. Cutting to four measured 30% cheaper, but
-       the last three carry the amber accent and the two darkest wedges that
-       ground the corners - without them the field reads brighter and flatter
-       than the design it was signed off as. The knob is here (data-layers)
-       if that trade is ever worth taking; the big win on this page came from
-       the testimonial ring, not from here.
+    /* Four layers, not seven, and chosen rather than sliced.
+
+       Measured while scrolling this page, hiding these blobs cut its
+       main-thread work by 65% - they were the single most expensive thing
+       left on it. Seven band-sized surfaces is simply more than the effect
+       is worth once someone is complaining that the page stutters.
+
+       The four kept are the first four, which are the deep teals. Keeping
+       the amber layer (index 4) instead of one of them was tried and looked
+       wrong: in the full stack it is almost entirely covered by the two dark
+       wedges painted over it, so on its own it stops being an accent and
+       becomes a solid orange slab across a third of the band. The accent
+       only ever worked as the little of it that showed through.
 
        will-change is deliberately absent: it measured as no help at all (1%),
-       and promoting seven band-sized layers costs memory for nothing. */
-    var layers = parseInt(host.getAttribute("data-layers"), 10) || PATHS.length;
+       and promoting band-sized layers costs memory for nothing. */
+    var KEEP = [0, 1, 2, 3];
+    var want = parseInt(host.getAttribute("data-layers"), 10);
+    var picks = (want > 0) ? KEEP.concat([4, 5, 6]).slice(0, want) : KEEP;
 
-    PATHS.slice(0, Math.max(1, Math.min(layers, PATHS.length))).forEach(function (pair, i) {
+    picks.map(function (p) { return PATHS[p]; }).forEach(function (pair, n) {
+      var i = picks[n];                 /* keep each layer's own colour */
       var svg = document.createElementNS(NS, "svg");
       svg.setAttribute("viewBox", "0 0 1440 800");
       svg.setAttribute("preserveAspectRatio", "none");

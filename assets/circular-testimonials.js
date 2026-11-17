@@ -93,7 +93,7 @@
     // ── the reader: content swaps INSTANTLY (never gated on a tween finishing),
     // the fade is decoration only so the words are always correct ──
     var activeIndex = -1;
-    function paint(i) {
+    function paint(i, instant) {
       if (i === activeIndex) return;
       activeIndex = i;
       var el = items[i];
@@ -105,7 +105,8 @@
       if (rMark) rMark.style.color = accent;
       if (rDot) rDot.style.background = accent;
       items.forEach(function (c) { c.classList.toggle("is-active", c === el); });
-      gsap.fromTo(reader, { opacity: .3, y: 8 }, { opacity: 1, y: 0, duration: .42, ease: "power3.out", overwrite: true });
+      if (instant) gsap.set(reader, { opacity: 1, y: 0 });
+      else gsap.fromTo(reader, { opacity: .3, y: 8 }, { opacity: 1, y: 0, duration: .42, ease: "power3.out", overwrite: true });
     }
     // initial paint, no pop
     (function seed() { paint(0); gsap.set(reader, { opacity: 1, y: 0 }); })();
@@ -117,19 +118,47 @@
     // ── rotation: eased current chasing a target, nudged by auto-spin + drag ──
     var current = 0, target = 0, dragging = false, lastX = 0, hovering = false;
 
+    /* Which chip is facing the viewer.
+
+       Chips are seated with transform-origin a radius BELOW themselves, so a
+       chip at rotationZ 0 sits at the top of the ring and one at 180 sits at
+       the bottom - which, once the ring is tilted back, is the seat nearest
+       the viewer. So the chip in front is whichever one lands on 180:
+
+         baseAngles[i] + current = 180,  baseAngles[i] = i*angleInc - 90
+
+       solved for i. Computed rather than searched, so this costs nothing even
+       with thirty-four chips on the ring. */
+    function frontIndex() {
+      var i = Math.round((270 - current) / angleInc) % items.length;
+      return i < 0 ? i + items.length : i;
+    }
+
+    /* The reader used to advance on its own 4.2 second timer, with no
+       relationship to the ring at all: the words in the middle changed while
+       the chip in front stayed put, and spinning the ring by hand changed
+       nothing. Now the ring drives the reader, so whatever is in front is
+       what you are reading - and dragging the ring scrubs the testimonials. */
+    var lastPaint = 0;
+    function syncReader(now) {
+      if (hovering) return;              /* hovering a chip takes precedence */
+      var f = frontIndex();
+      if (f === activeIndex) return;
+      /* A hard spin changes the front chip many times a second. Fading on
+         every one of those is a strobe, so past a certain rate the text just
+         swaps and the fade is kept for the slow drift. */
+      paint(f, (now - lastPaint) < 320);
+      lastPaint = now;
+    }
+
     function tick() {
       if (!vis.visible()) return;
       if (!reduce && !dragging && !hovering) target += (speed / 60) * gsap.ticker.deltaRatio();
       current += (target - current) * 0.05;
       setRingZ(current);
+      syncReader(performance.now());
     }
     gsap.ticker.add(tick);
-
-    // ── auto-advance the reader, paused while hovered or off-screen ──
-    if (!reduce) setInterval(function () {
-      if (hovering || !vis.visible()) return;
-      paint((activeIndex + 1) % items.length);
-    }, 4200);
 
     // ── chip interaction ──
     items.forEach(function (el, i) {

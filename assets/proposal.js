@@ -328,11 +328,10 @@
           '<path d="M4 12.5 9.5 18 20 6.5"/></svg>' +
         '</span>' +
         '<h2>Thank you, ' + esc(first) + '.</h2>' +
-        '<p>The automated blueprint is not open to the public yet &mdash; we would rather ' +
-          'hand you something a founder has read than something a machine guessed at.</p>' +
-        '<p>Your details for <strong>' + esc(company) + '</strong> are with us, and one of ' +
-          'the founders will come back to you directly with a blueprint for your ' +
-          'organisation.</p>' +
+        '<p>The self-serve blueprint is still under development. We are building it to a ' +
+          'standard we are willing to put our name on, and it is not there yet.</p>' +
+        '<p>Your details for <strong>' + esc(company) + '</strong> are with us, and we will ' +
+          'be in touch.</p>' +
         '<p class="pr-done-soon">Self-serve blueprints, coming soon.</p>' +
       '</div>';
     card.scrollIntoView({ behavior: 'smooth', block: 'center' });
